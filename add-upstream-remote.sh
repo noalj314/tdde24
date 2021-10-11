@@ -12,7 +12,7 @@ set -e
 # If not, add it.
 git config remote.upstream.url || git remote add upstream git@gitlab.liu.se:tdde23-24/python-tdde24-base.git
 
-# Update from the upstream repo (our central 
+# Update from the "upstream" repo defined above
 git checkout main
 git fetch upstream
 git pull upstream main
