@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Detta script uppdaterar det lokala Git-arkivet med eventuella
-# ändringar som har gjorts "centralt", i upstream-arkivet, efter
-# att ditt eget arkiv skapades.  Om du behöver köra scriptet
-# kommer vi att säga till!
+# ändringar som har gjorts "centralt", i upstream-arkivet, efter att
+# ditt eget arkiv skapades.  Om du behöver köra scriptet kommer vi att
+# säga till!
 
 # Exit script upon failure
 set -e
@@ -16,7 +16,10 @@ git config remote.upstream.url || git remote add upstream git@gitlab.liu.se:tdde
 # Update from the "upstream" repo defined above
 git checkout main
 git fetch upstream
-git pull upstream main
+
+# Don't start an editor to edit a merge message.
+# Too confusing and not so meaningful in this case.
+git pull upstream main --no-edit
 
 # Push updates to gitlab
 git push origin main
