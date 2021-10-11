@@ -8,8 +8,9 @@
 # Exit script upon failure
 set -e
 
-# Is the upstream already set?
-# If not, add it.
+# Is the upstream already set? If not, add it.
+# The upstream is the base repo that this archive was originally
+# forked from.
 git config remote.upstream.url || git remote add upstream git@gitlab.liu.se:tdde23-24/python-tdde24-base.git
 
 # Update from the "upstream" repo defined above
