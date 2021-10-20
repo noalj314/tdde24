@@ -76,16 +76,6 @@ def ensure_type(val, some_type: Type) -> None:
                                        f"expected type {some_type}."
 
 
-def ensure_list_type(val, type_name: type) -> None:
-    """ Checks if `val` is a list with only elements of `type_name`. """
-    ensure_type(val, List[type_name])
-
-
-def ensure_dict_type(val, type_name: type) -> None:
-    """ Checks if `val` is a dict with only values of `type_name`. """
-    ensure_type(val, Dict[Any, type_name])
-
-
 # =========================================================================
 #  2. Timepoints
 # =========================================================================
@@ -890,12 +880,6 @@ def test_ensure_type() -> None:
     ensure_type([[ts]], List[List[TimeSpan]])
     ensure_type(1, Any)
     ensure_type([1, 2, "abc"], List[Any])
-
-    ensure_list_type([1, 2, 3], int)
-    ensure_list_type([1, 2, "abc"], Any)
-
-    ensure_dict_type({"a": {1:1}, "b": {2:2}}, Dict[int, int])
-    ensure_dict_type({"a": time1, "b": time2}, Time)
 
     def ensure_fail(*args):
         try:
