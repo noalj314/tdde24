@@ -12,10 +12,12 @@ def exec_program(lst):
                 binary_statement(statement)
             if is_constant(statement):
                 return statement
+            
 
 def exec_statement(lst):
-    print(lst)
-    if isinstance(lst[0],list) and isinstance(lst,list):
+    if is_constant(lst):
+        return lst    
+    elif isinstance(lst[0],list) and isinstance(lst,list):
         for statement in lst:
             if is_output(statement):
                 print_statement(statement)
@@ -42,7 +44,6 @@ def print_statement(print_list):
 calc1 = ['calc', [4]]
 # print_list = ['print', 2 + 4]
 
-[3, "+", 5]
 
 def binary_statement(lst):
     result = None
@@ -54,13 +55,17 @@ def binary_statement(lst):
         result = binaryexpr_left(lst) / binaryexpr_right(lst)
     elif binaryexpr_operator(lst) == "*":
         result = binaryexpr_left(lst) * binaryexpr_right(lst)
+    print(result)
+    print(type(result))
     return result
+
 
 def if_statement(if_list):
     if is_condition(if_list[1]):
         new = if_list[1] 
         if condition_operator(new) == '>':
             if exec_statement(condition_left(new)) > exec_statement(condition_right(new)):
+                print("Yes")
                 exec_statement(if_list[2:])
             else:
                 exec_statement(if_list[3])
@@ -77,8 +82,8 @@ def if_statement(if_list):
 
 
     
-calc2 = ['calc', ['if', [[3, "+", 5], '>', 5], ['print', 2], ['print', 4]]]
+calc2 = ['calc', ['if', [[2, '+', 5], '>', 5], ['print', 2], ['print', 4]]]
 calc3 = ['calc', ['if', [3, '=', 5], ['print', 2], ['print', 4]]]
-['if', [[3, "+", 5], '>', 5], ['print', 2]]
+['if', [8, '>', 5], ['print', 2]]
 
 exec_program(calc2)
