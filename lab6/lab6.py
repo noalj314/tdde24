@@ -45,21 +45,21 @@ def binary_statement(lst):
 def if_statement(if_list):
 
     if is_binaryexpr(selection_condition(if_list)):
-        if_condition = if_list[1]
+        if_condition = if_list[1:]
         print(if_list)
         if condition_operator(if_condition) == '>':
             if exec_statement(condition_left(if_condition)) > exec_statement(condition_right(if_condition)):
-                print("pring")
+                return True
             else:
-                exec_statement(if_list[3])
+                return False
         if condition_operator(if_condition) == '<':
             if exec_statement(condition_left(if_condition)) < exec_statement(condition_right(if_condition)) :
-                exec_statement(if_list[2:])
+                return True
             else:
-                exec_statement(if_list[3])
+                return False
         if condition_operator(if_condition) == '=':
             if exec_statement(condition_left(if_condition)) == exec_statement(condition_right(if_condition)):
-                exec_statement(if_list[2:])
+                return True
             else:
                 exec_statement(if_list[3])
 
