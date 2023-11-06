@@ -43,10 +43,9 @@ def binary_statement(lst):
 
 
 def if_statement(if_list):
-
+    #print(if_list)
     if is_binaryexpr(selection_condition(if_list)):
-        if_condition = if_list[1:]
-        print(if_list)
+        if_condition = if_list
         if condition_operator(if_condition) == '>':
             if exec_statement(condition_left(if_condition)) > exec_statement(condition_right(if_condition)):
                 return True
@@ -61,10 +60,9 @@ def if_statement(if_list):
             if exec_statement(condition_left(if_condition)) == exec_statement(condition_right(if_condition)):
                 return True
             else:
-                exec_statement(if_list[3])
+                return False
 
-
-calc2 = ['calc', ['if', [4, "+", 2], '>', 5], ['print', 2], ['print', 4]]
+calc2 = ['calc', ['if', [[2,"+",0], "+", 2], '>', 5], ['print', 2], ['print', 4]]
 calc3 = ['calc', ['if', [3, '=', 5], ['print', 2], ['print', 4]]]
 
 exec_program(calc2)
