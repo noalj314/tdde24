@@ -9,6 +9,8 @@ def exec_program(lst, dic=None):
         for statement in statements:
             exec_statement(statement, dic)
         return dic
+    else:
+        raise SyntaxError("Not a program")
 def exec_statement(lst, dic):
     if is_output(lst):
         print_statement(lst, dic)
@@ -96,23 +98,6 @@ def if_statement(if_list, dic):
         else:
             exec_statement(false_print, dic)
 
-        """
-        if condition_operator(if_condition) == '>':
-            if exec_statement(condition_left(if_condition), dic) > exec_statement(condition_right(if_condition), dic):
-                exec_statement(true_print, dic)
-            elif false_print is not None:
-                exec_statement(false_print, dic)
-        if condition_operator(if_condition) == '<':
-            if exec_statement(condition_left(if_condition), dic) < exec_statement(condition_right(if_condition), dic):
-                exec_statement(true_print, dic)
-            elif false_print is not None:
-                exec_statement(false_print, dic)
-        if condition_operator(if_condition) == '=':
-            if exec_statement(condition_left(if_condition) , dic) == exec_statement(condition_right(if_condition) , dic):
-                exec_statement(true_print, dic)
-            elif false_print is not None:
-                exec_statement(false_print, dic) 
-        """
 
 #calc1 = ['calc', ['set', 'a', 5], ['print', 'a']]
 #calc_set2 = ['calc', ['set', 'a', [[[5, '-', [1, '+', 2]], '+', 2], '+', [2, '*', 3]]], ['print', 'a']]
@@ -123,7 +108,7 @@ def if_statement(if_list, dic):
 #my_table = {'a': 7}
 #new_table = exec_program(calc1, my_table)
 #print(my_table)
-calc10 = ['calc', ['if', [10, '>', 5], [['read', 'x'], ['print', 'x']], ['print', 4]]]
+calc10 = ['calc1', ['ife', [10, '>', 5], ['print', 4]]]
 talc2 = ['calc', ['set', 'x', 7],
              ['set', 'y', 12],
             ['set', 'z', ['x', '+', 'y']],
@@ -140,4 +125,4 @@ calc4 = ['calc', ['read', 'n'],
              ['set', 'sum', ['sum', '+', 'n']],
              ['set', 'n', ['n', '-', 1]]],
              ['print', 'sum']]
-#exec_program(calc3)
+#exec_program(calc10)
