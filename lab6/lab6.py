@@ -1,112 +1,117 @@
 from calc import *
-def exec_program(lst, dick=None):
-    if dick is None:
-        dick = {}
+def exec_program(lst, dic=None):
+    if dic is None:
+        dic = {}
     else:
-        dick = dick.copy()
+        dic = dic.copy()
     if is_program(lst):
         statements = program_statements(lst)
         for statement in statements:
-            exec_statement(statement, dick)
-        return dick
-def exec_statement(lst, dick):
+            exec_statement(statement, dic)
+        return dic
+def exec_statement(lst, dic):
     if is_output(lst):
-        print_statement(lst, dick)
+        print_statement(lst, dic)
     elif is_assignment(lst):
-        ass_statement(lst, dick)
+        ass_statement(lst, dic)
     elif is_selection(lst):
-        if_statement(lst, dick)
+        if_statement(lst, dic)
     elif is_input(lst):
-        inputer(lst, dick)
+        inputer(lst, dic)
     elif is_repetition(lst):
-        whiler(lst,dick)
+        whiler(lst,dic)
     elif is_condition(lst):
-        return if_condition(lst,dick)
+        return if_condition(lst,dic)
     elif is_variable(lst):
-        return variable(lst, dick)
+        return variable(lst, dic)
     elif is_binaryexpr(lst):
-        return binary_statement(lst, dick)
+        return binary_statement(lst, dic)
     elif is_constant(lst):
         return lst
 
-def print_statement(print_list, dick):
-    if output_expression(print_list) in dick:
-        y = dick.get((output_expression(print_list)))
+def print_statement(print_list, dic):
+    if output_expression(print_list) in dic:
+        y = dic.get((output_expression(print_list)))
         print(output_expression(print_list) + " =", + y)
     else:
-        print(exec_statement(output_expression(print_list),dick))
+        print(exec_statement(output_expression(print_list),dic))
 
-def inputer(lst,dick):
-    return dick.update({input_variable(lst): int(input())})
+def inputer(lst,dic):
+    z = input()
+    if z == '':
+        raise ValueError("hej")
+    else:
+        z = int(z)
+    return dic.update({input_variable(lst): z})
 
-def variable(lst, dick):
-    return dick.get(lst)
+def variable(lst, dic):
+    return dic.get(lst)
 
-def ass_statement(statement, dick):
-    return dick.update({assignment_variable(statement): exec_statement(assignment_expression(statement), dick)})
+def ass_statement(statement, dic):
+    return dic.update({assignment_variable(statement): exec_statement(assignment_expression(statement), dic)})
 
-def whiler(lst,dick):
-    while exec_statement(repetition_condition(lst), dick):
+def whiler(lst,dic):
+    while exec_statement(repetition_condition(lst), dic):
         for statement in repetition_statements(lst):
-            exec_statement(statement, dick)
-    return dick
+            exec_statement(statement, dic)
+    return dic
 
-def binary_statement(lst, dick ):
+def binary_statement(lst, dic ):
     result = None
     if binaryexpr_operator(lst) == "+":
-        result = exec_statement(binaryexpr_left(lst), dick) + exec_statement(binaryexpr_right(lst), dick)
+        result = exec_statement(binaryexpr_left(lst), dic) + exec_statement(binaryexpr_right(lst), dic)
     elif binaryexpr_operator(lst) == "-":
-        result = exec_statement(binaryexpr_left(lst), dick) - exec_statement(binaryexpr_right(lst), dick)
+        result = exec_statement(binaryexpr_left(lst), dic) - exec_statement(binaryexpr_right(lst), dic)
     elif binaryexpr_operator(lst) == "/":
-        result = exec_statement(binaryexpr_left(lst), dick) / exec_statement(binaryexpr_right(lst) , dick)
+        result = exec_statement(binaryexpr_left(lst), dic) / exec_statement(binaryexpr_right(lst) , dic)
     elif binaryexpr_operator(lst) == "*":
-        result = exec_statement(binaryexpr_left(lst), dick) * exec_statement(binaryexpr_right(lst) , dick)
+        result = exec_statement(binaryexpr_left(lst), dic) * exec_statement(binaryexpr_right(lst) , dic)
     return result
 
 #calc2 = [['if', [10, '>', 5], ['print', 2], ['print', 4]]
 
-def if_condition(lst, dick):
+def if_condition(lst, dic):
     if condition_operator(lst) == '>':
-        if exec_statement(condition_left(lst), dick) > exec_statement(condition_right(lst), dick):
+        if exec_statement(condition_left(lst), dic) > exec_statement(condition_right(lst), dic):
             return True
         else:
             return False
     if condition_operator(lst) == '<':
-        if exec_statement(condition_left(lst), dick) < exec_statement(condition_right(lst), dick):
+        if exec_statement(condition_left(lst), dic) < exec_statement(condition_right(lst), dic):
             return True
         else:
             return False
     if condition_operator(lst) == '=':
-        if exec_statement(condition_left(lst), dick) == exec_statement(condition_right(lst), dick):
+        if exec_statement(condition_left(lst), dic) == exec_statement(condition_right(lst), dic):
             return True
         else:
             return False
 
-def if_statement(if_list, dick):
+def if_statement(if_list, dic):
     if is_condition(if_list[1]):
         true_print = if_list[2]
         false_print = if_list[3] if selection_has_false_branch(if_list) else None
-        if if_condition(if_list[1], dick):
-            exec_statement(true_print, dick)
+        if if_condition(if_list[1], dic):
+            exec_statement(true_print, dic)
         else:
-            exec_statement(false_print, dick)
+            exec_statement(false_print, dic)
 
         """
         if condition_operator(if_condition) == '>':
-            if exec_statement(condition_left(if_condition), dick) > exec_statement(condition_right(if_condition), dick):
-                exec_statement(true_print, dick)
+            if exec_statement(condition_left(if_condition), dic) > exec_statement(condition_right(if_condition), dic):
+                exec_statement(true_print, dic)
             elif false_print is not None:
-                exec_statement(false_print, dick)
+                exec_statement(false_print, dic)
         if condition_operator(if_condition) == '<':
-            if exec_statement(condition_left(if_condition), dick) < exec_statement(condition_right(if_condition), dick):
-                exec_statement(true_print, dick)
+            if exec_statement(condition_left(if_condition), dic) < exec_statement(condition_right(if_condition), dic):
+                exec_statement(true_print, dic)
             elif false_print is not None:
-                exec_statement(false_print, dick)
+                exec_statement(false_print, dic)
         if condition_operator(if_condition) == '=':
-            if exec_statement(condition_left(if_condition) , dick) == exec_statement(condition_right(if_condition) , dick):
-                exec_statement(true_print, dick)
+            if exec_statement(condition_left(if_condition) , dic) == exec_statement(condition_right(if_condition) , dic):
+                exec_statement(true_print, dic)
             elif false_print is not None:
-                exec_statement(false_print, dick) 
+                exec_statement(false_print, dic) 
         """
 
 #calc1 = ['calc', ['set', 'a', 5], ['print', 'a']]
@@ -135,4 +140,4 @@ calc4 = ['calc', ['read', 'n'],
              ['set', 'sum', ['sum', '+', 'n']],
              ['set', 'n', ['n', '-', 1]]],
              ['print', 'sum']]
-exec_program(calc3)
+#exec_program(calc3)
