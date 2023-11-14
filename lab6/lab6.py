@@ -1,7 +1,7 @@
 from calc import *
 
-
 def exec_program(lst, dic=None):
+    """Runs a calc program if it has the correct syntax"""
     if dic is None:
         dic = {}
     if is_program(lst):
@@ -13,10 +13,11 @@ def exec_program(lst, dic=None):
         raise SyntaxError("Not a program")
 
 def exec_statement(lst, dic):
+    """Checks what kind of a statement it is and runs the corresponding function"""
     if is_output(lst):
         return print_statement(lst, dic)
     elif is_assignment(lst):
-        return ass_statement(lst, dic)
+        return assign_statement(lst, dic)
     elif is_selection(lst):
         return if_statement(lst, dic)
     elif is_input(lst):
@@ -35,6 +36,7 @@ def exec_statement(lst, dic):
 
 
 def print_statement(print_list, dic):
+    """Prints a given expression"""
     if output_expression(print_list) in dic:
         y = dic.get((output_expression(print_list)))
         print(output_expression(print_list) + " =", + y)
@@ -44,6 +46,7 @@ def print_statement(print_list, dic):
 
 
 def inputer(lst, dic):
+    """Gives a variable for which a value shall be inputted"""
     dic_local = dic.copy()
     read_variable = input_variable(lst)
     val = input(f"Enter value for {read_variable}: ")
@@ -53,11 +56,13 @@ def inputer(lst, dic):
 
 
 def variable(statement, dic):
+    """Returns the value of given variable"""
     variable_value = dic.get(statement)
     return variable_value
 
 
-def ass_statement(statement, dic):
+def assign_statement(statement, dic):
+    """Assigns a variable the value of an expression"""
     dic_local = dic.copy()
     var = assignment_variable(statement)
     value = exec_statement(assignment_expression(statement), dic_local)
@@ -66,6 +71,7 @@ def ass_statement(statement, dic):
 
 
 def whiler(lst, dic):
+    """Runs a while loop for given condition"""
     dic_local = dic.copy()
     while exec_statement(repetition_condition(lst), dic_local):
         for statement in repetition_statements(lst):
@@ -74,6 +80,7 @@ def whiler(lst, dic):
 
 
 def binary_statement(lst, dic):
+    """Does the math for all statmenets"""
     result = None
     left = exec_statement(binaryexpr_left(lst), dic)
     right = exec_statement(binaryexpr_right(lst), dic)
@@ -92,6 +99,7 @@ def binary_statement(lst, dic):
 
 
 def if_condition(lst, dic):
+    """Returns true or false depending on if a condition is true or false"""
     left = exec_statement(condition_left(lst), dic)
     right = exec_statement(condition_right(lst), dic)
     if condition_operator(lst) == '>':
@@ -113,6 +121,7 @@ def if_condition(lst, dic):
 
 
 def if_statement(if_list, dic):
+    """If a condition statment is true print the first print statement else print the second if it exists"""
     if is_condition(if_list[1]):
         true_print = if_list[2]
         false_print = if_list[3] if selection_has_false_branch(if_list) else None
