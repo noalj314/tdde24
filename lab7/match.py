@@ -30,4 +30,4 @@ seq = [['titel', [['bil','apakuk'], 'book']], ['år', 2022]]
 pattern = [['titel', [['--', '&'], '&']], ['år', '&']]
 print(match(seq, pattern))
 
-def search(match):
+#def search(match):
