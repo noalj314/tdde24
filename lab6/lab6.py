@@ -15,28 +15,29 @@ def exec_program(lst, dic=None):
 def exec_statement(lst, dic):
     """Checks what kind of a statement it is and runs the corresponding function"""
     if is_output(lst):
-        return print_statement(lst, dic)
+        return exec_output(lst, dic)
     elif is_assignment(lst):
-        return assign_statement(lst, dic)
+        return exec_assignment(lst, dic)
     elif is_selection(lst):
-        return if_statement(lst, dic)
+        return exec_selection(lst, dic)
     elif is_input(lst):
-        return inputer(lst, dic)
+        return exec_input(lst, dic)
     elif is_repetition(lst):
-        return whiler(lst, dic)
+        return exec_repetition(lst, dic)
 
 
 def eval_expression(lst, dic):
+    """Evaluates an expression"""
     if is_variable(lst):
-        return variable(lst, dic)
+        return eval_variable(lst, dic)
     elif is_binaryexpr(lst):
-        return binary_statement(lst, dic)
+        return eval_binaryexpr(lst, dic)
     elif is_constant(lst):
         return lst
     return dic
     
 
-def print_statement(print_list, dic):
+def exec_output(print_list, dic):
     """Prints a given expression"""
     if output_expression(print_list) in dic:
         y = dic.get((output_expression(print_list)))
@@ -46,7 +47,7 @@ def print_statement(print_list, dic):
     return dic
 
 
-def inputer(lst, dic):
+def exec_input(lst, dic):
     """Gives a variable for which a value shall be inputted"""
     dic_local = dic.copy()
     read_variable = input_variable(lst)
@@ -56,7 +57,7 @@ def inputer(lst, dic):
     return dic_local
 
 
-def binary_statement(lst, dic):
+def eval_binaryexpr(lst, dic):
     """Does the math for all statmenets"""
     result = None
     left = eval_expression(binaryexpr_left(lst), dic)
@@ -76,17 +77,18 @@ def binary_statement(lst, dic):
 
 
 
-def variable(statement, dic):
+def eval_variable(statement, dic):
     """Returns the value of given variable"""
     variable_value = dic.get(statement)
     return variable_value
    
 
 def eval_constant(statement,dic):
+    """Evaluates a constant"""
     return statement
 
 
-def assign_statement(statement, dic):
+def exec_assignment(statement, dic):
     """Assigns a variable the value of an expression"""
     dic_local = dic.copy()
     var = assignment_variable(statement)
@@ -95,15 +97,16 @@ def assign_statement(statement, dic):
     return dic_local
 
 
-def whiler(lst, dic):
+def exec_repetition(lst, dic):
     """Runs a while loop for given condition"""
-    while if_condition(repetition_condition(lst), dic_local):
+    while eval_condition(repetition_condition(lst), dic):
         for statement in repetition_statements(lst):
-            dic_local = exec_statement(statement, dic_local) 
+            dic = exec_statement(statement, dic) 
     return dic
 
 
-def if_condition(lst, dic):
+
+def eval_condition(lst, dic):
     """Returns true or false depending on if a condition is true or false"""
     if is_condition(lst):
         left = eval_expression(condition_left(lst), dic)
@@ -128,18 +131,19 @@ def if_condition(lst, dic):
         raise SyntaxError
 
 
-def if_statement(if_list, dic):
+def exec_selection(if_list, dic):
     """If a condition statment is true print the first print statement else print the second if it exists"""
-    if eval_statement(if_list,dic):
-        do_this = if_list[2]
+    if eval_condition_final(if_list,dic):
+        do_this = selection_true_branch(if_list)
     else: 
-        do_this = if_list[3] if selection_has_false_branch(if_list) else None
+        do_this = selection_false_branch(if_list) if selection_has_false_branch(if_list) else None
     return exec_statement(do_this, dic) if do_this else dic
     
 
-def eval_statement(if_list,dic):
-    if is_condition(if_list[1]):
-        if if_condition(if_list[1], dic):
+def eval_condition_final(if_list,dic):
+    """ Evaluates a condition """
+    if is_condition(selection_condition(if_list)):
+        if eval_condition(selection_condition(if_list), dic):
             return True
         else: 
             return False
@@ -148,7 +152,7 @@ def eval_statement(if_list,dic):
     
 
 
-calc10 = ['calc', ['if', [1 , '>', 5], ['print', 4], ['print', 3]]]
+calc10 = ['calc', ['if', [10 , '>', 5], ['print', 4], ['print', 3]]]
 talc2 = ['calc', ['set', 'x', 7],
          ['set', 'y', 12],
          ['set', 'z', ['x', '+', 'y']],
@@ -166,3 +170,4 @@ calc4 = ['calc', ['read', 'n'],
           ['set', 'n', ['n', '-', 1]]],
          ['print', 'sum']]
 
+exec_program(calc10)
