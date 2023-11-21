@@ -47,10 +47,13 @@ test_seq_2 = [
 [['player', ['Nikola', 'Jokic']], ['MVP', ['amount', 2]], ['FMVP', ['amount', 1]], ['chips', ['amount', 1]]]
 
 ]
-
+"""
 def test_final(pattern, db):
         lst = []
         for i,item in db:
+            zip(item,)
+
 
         
         return lst
+"""

@@ -33,7 +33,7 @@ class test_functions(unittest.TestCase):
     def test_final(self):
         lst = []
         for item,ytem in zip(test_seq_2, test_pattern_4): 
-            if match(item, test_pattern_4):
+            if match(item, ytem):
                 lst.append(item)
         return lst
         
