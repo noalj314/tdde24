@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from books import *
 
 def match(seq, pattern):
@@ -34,27 +35,22 @@ def search(pattern, db):
             lst.append(item)
     return lst
  
+pattern1 = [['fÃ¶rfattare', ['&', 'zelle']], ['titel', ['--', 'python', '--']], ['Ã¥r', '&']]
 
+# print(search(pattern1, db))
 
+test_pattern_4 = [['player', ['&', '--']], ['FMVP', ['amount', '&']], ['DPOY', ['amount', '&']], ['chips', ['amount', '&']]]
 
+test_seq_2 = [
+[['player', ['Kawhi', 'Leonard']], ['FMVP', ['amount', 2]], ['DPOY', ['amount', 2]], ['chips', ['amount', 2]]],
+[['player', ['Giannis', 'Antetokounmpo']], ['MVP', ['amount', 2]], ['FMVP', ['amount', 1]], ['DPOY', ['amount', 2]], ['chips', ['amount', 1]]],
+[['player', ['Nikola', 'Jokic']], ['MVP', ['amount', 2]], ['FMVP', ['amount', 1]], ['chips', ['amount', 1]]]
 
-
-
-
-seq1 = [ [['författare', ['armen', 'asratian']],
-       ['titel', ['diskret', 'matematik']],
-       ['år', 2012]],
-       [['författare', ['john', 'zelle']],
-       ['titel', ['python', 'programming', 'an', 'introduction', 'to',
-                  'computer', 'science']],
-       ['år', 2010]]  
 ]
 
-pattern1 = [['författare', ['&', 'zelle']], ['titel', ['--', 'python', '--']], ['år', '&']]
+def test_final(pattern, db):
+        lst = []
+        for i,item in db:
 
-seq2 = [['titel', ['python',], ['år', 2010]]]
-seq3 = [[['python']], ['år', '&']]
-
-
-print(search(pattern1,db))
-
+        
+        return lst

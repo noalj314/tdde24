@@ -1,4 +1,4 @@
-from calc import *
+ifrom calc import *
 
 def exec_program(lst, dic=None):
     """Runs a calc program if it has the correct syntax"""
