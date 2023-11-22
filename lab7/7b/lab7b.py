@@ -1,6 +1,7 @@
 from help_functions import *
 
 def traverse(tree, inner_node_fn, leaf_fn, empty_tree_fn):
+    """Traverses a tree structure and applies functions based on node types"""
     if is_empty_tree(tree):
         return empty_tree_fn()
     elif is_leaf(tree):
@@ -8,10 +9,10 @@ def traverse(tree, inner_node_fn, leaf_fn, empty_tree_fn):
     else:
         left_value = traverse(left_subtree(tree), inner_node_fn, leaf_fn, empty_tree_fn)
         right_value = traverse(right_subtree(tree), inner_node_fn, leaf_fn, empty_tree_fn)
-        
         return inner_node_fn(tree_key(tree), left_value, right_value)
 
 def value_of_tree(tree):
+    """Returns sum of key and values of left nodes squared"""
     def empty_tree_fn():
      return 0
 
@@ -23,6 +24,7 @@ def value_of_tree(tree):
     return traverse(tree, inner_node_fn, leaf_fn, empty_tree_fn)
 
 def contains_key(key, tree):
+    """Returns a boolean value """
     def empty_tree_fn():
         return False
     def leaf_fn(leaf):
@@ -32,6 +34,7 @@ def contains_key(key, tree):
     return traverse(tree, inner_node_fn, leaf_fn, empty_tree_fn)
 
 def tree_size(tree):
+    """Returns the size of the tree"""
     def empty_tree_fn():
         return 0
     def leaf_fn(leaf):
@@ -41,6 +44,7 @@ def tree_size(tree):
     return traverse(tree, inner_node_fn, leaf_fn, empty_tree_fn)
 
 def tree_depth(tree):
+    """Returns the depth of the tree"""
     def empty_tree_fn():
         return 0
     def leaf_fn(leaf):
@@ -49,12 +53,14 @@ def tree_depth(tree):
         return 1 + max(left_value, right_value)
     return traverse(tree, inner_node_fn, leaf_fn, empty_tree_fn)
 
+"""
+print(value_of_tree([6, 7, 8]))
 
-# print(contains_key(6, [6, 7, 8]))
+print(contains_key(6, [6, 7, 8]))
 
-# print(contains_key(2, [6, 7, [[2, 3, 4], 0, []]]))
+print(contains_key(2, [6, 7, [[2, 3, 4], 0, []]]))
 
-# print(contains_key(2, [[], 1, 5]))
+print(contains_key(2, [[], 1, 5]))
 
 print(tree_size([2, 7, []]))
 
@@ -65,3 +71,5 @@ print(tree_size([[1, 2, []], 4, [[], 5, 6]]))
 print(tree_depth(9))
 
 print(tree_depth([1, 5, [10, 7, 14]]))
+
+"""
