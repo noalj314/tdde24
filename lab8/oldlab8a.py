@@ -36,18 +36,26 @@ def ts_overlapping_part(ts1: TimeSpan, ts2: TimeSpan) -> TimeSpan:
     #Här ändrar vi 
     start = time_latest(ts_start(ts1), ts_start(ts2)) # lägger till start
     end = time_earliest(ts_end(ts1), ts_end(ts2)) # lägger till end
+    """
+    min1 = max( #08:00 - 12:00     11:00 - 13:00
+        ts1.start.hour.number * 60 + ts1.start.minute.number,  #
+        ts2.start.hour.number * 60 + ts2.start.minute.number,
+    )
+    min2 = min(
+        ts1.end.hour.number * 60 + ts1.end.minute.number,  #
+        ts2.end.hour.number * 60 + ts2.end.minute.number,
+    )
+    """
+    return new_time_span(start, end)
     
-    return new_time_span(start, end) #här
-    
+    #TimeSpan(Time(Hour(min1 // 60), Minute(min1 % 60)),
+                    #Time(Hour(min2 // 60), Minute(min2 % 60)))
+
 
 
 def ts_duration(ts: TimeSpan) -> "Duration":
     """Return the duration (length) of a TimeSpan"""
-    ensure_type(ts, TimeSpan) # 10:24 - 12:06 => 1:42   ,   12:14 - 15:57 => 3:43
-    start = ts_start(ts) 
-    end = ts_end(ts)
-    duration_first
-    duration_first
+    ensure_type(ts, TimeSpan)
 
     mins = (
             ts.end.hour.number 
