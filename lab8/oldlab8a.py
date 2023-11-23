@@ -6,8 +6,8 @@ def ts_equals(ts1: TimeSpan, ts2: TimeSpan):
     """Return true iff the two given TimeSpans are equal."""
     ensure_type(ts1, TimeSpan)
     ensure_type(ts2, TimeSpan)
-    return (time_equals(ts_start(ts1), ts_end(ts2)) and
-            time_equals(ts_start(ts1), ts_end(ts2))) ###Här har vi ändrat
+    return (time_equals(ts1.start, ts2.start) and
+            time_equals(ts1.end, ts2.end))
 
 
 def ts_overlap(ts1: TimeSpan, ts2: TimeSpan) -> bool:
@@ -17,9 +17,9 @@ def ts_overlap(ts1: TimeSpan, ts2: TimeSpan) -> bool:
 
     return (
             # TS1 isn't strictly after TS2
-            time_precedes(ts_start(ts1), ts_start(ts2)) and
+            time_precedes(ts1.start, ts2.end) and
             # TS2 isn't strictly after ts1
-            time_precedes(ts_start(ts2), ts_start(ts1))  #Här med
+            time_precedes(ts2.start, ts1.end)
     )
 
 
@@ -31,13 +31,8 @@ def ts_overlapping_part(ts1: TimeSpan, ts2: TimeSpan) -> TimeSpan:
     ensure((ts1, ts2), lambda tup: ts_overlap(tup[0], tup[1]))
 
     # Tips: Det finns både snyggare och *enklare* sätt
-    # att göra detta... 
-
-    #Här ändrar vi 
-    start = time_latest(ts_start(ts1), ts_start(ts2)) # lägger till start
-    end = time_earliest(ts_end(ts1), ts_end(ts2)) # lägger till end
-    """
-    min1 = max( #08:00 - 12:00     11:00 - 13:00
+    # att göra detta...
+    min1 = max(
         ts1.start.hour.number * 60 + ts1.start.minute.number,  #
         ts2.start.hour.number * 60 + ts2.start.minute.number,
     )
@@ -45,12 +40,8 @@ def ts_overlapping_part(ts1: TimeSpan, ts2: TimeSpan) -> TimeSpan:
         ts1.end.hour.number * 60 + ts1.end.minute.number,  #
         ts2.end.hour.number * 60 + ts2.end.minute.number,
     )
-    """
-    return new_time_span(start, end)
-    
-    #TimeSpan(Time(Hour(min1 // 60), Minute(min1 % 60)),
-                    #Time(Hour(min2 // 60), Minute(min2 % 60)))
-
+    return TimeSpan(Time(Hour(min1 // 60), Minute(min1 % 60)),
+                    Time(Hour(min2 // 60), Minute(min2 % 60)))
 
 
 def ts_duration(ts: TimeSpan) -> "Duration":
@@ -58,8 +49,7 @@ def ts_duration(ts: TimeSpan) -> "Duration":
     ensure_type(ts, TimeSpan)
 
     mins = (
-            ts.end.hour.number 
-            * 60 + ts.end.minute.number -
+            ts.end.hour.number * 60 + ts.end.minute.number -
             ts.start.hour.number * 60 - ts.start.minute.number
     )
     return Duration(Hour(mins // 60), Minute(mins % 60))

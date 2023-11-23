@@ -5,13 +5,21 @@ from cal_ui import *
 """
 
 
-create('Armen Asratian')
+# create('Armen Asratian')
 
-book('Armen Asratian', 23, 'nov', '01:00', '02:00', "Lick Noahs asshole")
-book('Armen Asratian', 23, 'nov', '02:00', '03:00', "Fuck Kevin in the ass")
-book('Armen Asratian', 23, 'nov', '03:00', '06:00', "Dildo in my ass in student huset")
-book('Armen Asratian', 23, 'nov', '06:00', '23:59', "Piss in Noahs ear")
+# book('Armen Asratian', 23, 'nov', '01:00', '02:00', "Lick Noahs asshole")
+# book('Armen Asratian', 23, 'nov', '02:00', '03:00', "Fuck Kevin in the ass")
+# book('Armen Asratian', 23, 'nov', '03:00', '06:00', "Dildo in my ass in student huset")
+# book('Armen Asratian', 23, 'nov', '06:00', '23:59', "Piss in Noahs ear")
 
-remove('Armen Asratian',23,'nov','06:00')
+# remove('Armen Asratian',23,'nov','06:00')
 
-show('Armen Asratian',23, 'nov')
+# # show('Armen Asratian',23, 'nov')
+# Time = ("Time", [("hour", 10), ("minute", 30)])
+
+hej=new_time(new_hour(10), new_minute(30))
+# print(hej)
+
+print(time_minute(hej))
+
+duration_first = hour_number(time_hour(start)) * 60 + minute_number(time_minute(start))
