@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-from books import *
+# Encoding: ISO-8859-1
 
 def match(seq, pattern):
     """
@@ -29,31 +28,10 @@ def match(seq, pattern):
 
 
 def search(pattern, db):
+    """Searches through a database and returns all the items in the db corresponding to the pattern"""
     lst = []
     for item in db: 
         if match(item, pattern):
             lst.append(item)
     return lst
  
-pattern1 = [['fÃ¶rfattare', ['&', 'zelle']], ['titel', ['--', 'python', '--']], ['Ã¥r', '&']]
-
-# print(search(pattern1, db))
-
-test_pattern_4 = [['player', ['&', '--']], ['FMVP', ['amount', '&']], ['DPOY', ['amount', '&']], ['chips', ['amount', '&']]]
-
-test_seq_2 = [
-[['player', ['Kawhi', 'Leonard']], ['FMVP', ['amount', 2]], ['DPOY', ['amount', 2]], ['chips', ['amount', 2]]],
-[['player', ['Giannis', 'Antetokounmpo']], ['MVP', ['amount', 2]], ['FMVP', ['amount', 1]], ['DPOY', ['amount', 2]], ['chips', ['amount', 1]]],
-[['player', ['Nikola', 'Jokic']], ['MVP', ['amount', 2]], ['FMVP', ['amount', 1]], ['chips', ['amount', 1]]]
-
-]
-"""
-def test_final(pattern, db):
-        lst = []
-        for i,item in db:
-            zip(item,)
-
-
-        
-        return lst
-"""

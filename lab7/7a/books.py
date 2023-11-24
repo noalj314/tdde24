@@ -1,21 +1,21 @@
-# -*- coding: utf-8 -*-
+# Encoding: ISO-8859-1
 
 
-db = [[['fÃÂÃÂÃÂÃÂ¶rfattare', ['john', 'zelle']],
+db = [[['fÃÂÃÂ¶rfattare', ['john', 'zelle']],
        ['titel', ['python', 'programming', 'an', 'introduction', 'to',
                   'computer', 'science']],
-       ['ÃÂÃÂÃÂÃÂ¥r', 2010]],
-      [['fÃÂÃÂÃÂÃÂ¶rfattare', ['armen', 'asratian']],
+       ['ÃÂÃÂ¥r', 2010]],
+      [['fÃÂÃÂ¶rfattare', ['armen', 'asratian']],
        ['titel', ['diskret', 'matematik']],
-       ['Ã¥r', 2012]],
-      [['fÃ¶rfattare', ['j', 'glenn', 'brookshear']],
+       ['år', 2012]],
+      [['författare', ['j', 'glenn', 'brookshear']],
        ['titel', ['computer', 'science', 'an', 'overview']],
-       ['Ã¥r', 2011]],
-      [['fÃ¶rfattare', ['john', 'zelle']],
+       ['år', 2011]],
+      [['författare', ['john', 'zelle']],
        ['titel', ['data', 'structures', 'and', 'algorithms', 'using',
                   'python', 'and', 'c++']],
-       ['Ã¥r', 2009]],
-      [['fÃ¶rfattare', ['anders', 'haraldsson']],
+       ['år', 2009]],
+      [['författare', ['anders', 'haraldsson']],
        ['titel', ['programmering', 'i', 'lisp']],
-       ['Ã¥r', 1993]]]
+       ['år', 1993]]]
 
