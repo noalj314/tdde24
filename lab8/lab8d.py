@@ -1,8 +1,8 @@
-# Write your code for lab 8d here.
+    # Write your code for lab 8d here.
 from cal_abstraction import CalendarDay, Time
 from cal_ui import *
 from settings import CHECK_AGAINST_FACIT
-
+from lab8b import *
 
 
 
@@ -22,38 +22,61 @@ else:
 
 def show_free(cal_name: str, d: int, mon: str, start: str, end: str):
     day = new_day(d)
+    mo = new_month(mon)
     start_time = new_time_from_string(start)
     end_time = new_time_from_string(end)
     cal_year = get_calendar(cal_name)
-    cal_month = cy_get_month(mon, cal_year)
+    cal_month = cy_get_month(mo, cal_year)
     cal_day = cm_get_day(cal_month, day)
-    create_free_time(cal_day, start, end)
+    free_spans(cal_day, start_time, end_time)
 
+def free_spans(cal_day: CalendarDay, start: Time, end: Time):
+    """ Creates a list with all relevant (available) timespans in given calendar day. """
+    free_time = []
+    timespans = None
+    timespans = appointments_within_timespan(cal_day, start, end)
 
-#    basfall: om start appointment
-#    iterera genom appointment list
-#        skapa timespan av: slut tiden av i och start tiden av i+1
-def create_free_time(cal_day: CalendarDay, start: Time, end:Time):
+    # In case there does not exist any appointments
+    if not timespans:
+        print(f"{new_str_from_time(start)} - {new_str_from_time(end)}")
+        free_time.append(new_time_span(start,end))
+        return new_time_span_seq(free_time)
+
+    # Handle time before first appointment
+    if time_precedes(start, ts_start(app_span(timespans[0]))):
+        print(f"{new_str_from_time(start)} - {new_str_from_time(ts_start(app_span(timespans[0])))}")
+        free_time.append(new_time_span(start,ts_start(app_span(timespans[0]))))
+
+    # Loops through the appointments and appends all times between appointments to free_time
+    for i in range(len(timespans) - 1):
+        current_end = ts_end(app_span(timespans[i]))
+        next_start = ts_start(app_span(timespans[i + 1]))
+
+    # Handles all the appointments within the interval
+        if time_precedes(current_end, end):
+            free_time.append(new_time_span(current_end,next_start))
+            print((f"{new_str_from_time(current_end)} - {new_str_from_time(next_start)}"))
+
+    # Handle time after last appointment
+    last_app_end = ts_end(app_span(timespans[-1]))
+    if time_precedes(last_app_end, end):
+        free_time.append(new_time_span(last_app_end, end))
+        print(f"{new_str_from_time(last_app_end)} - {new_str_from_time(end)}")
+    return new_time_span_seq(free_time)
+
+def appointments_within_timespan(cal_day: CalendarDay, start: Time, end: Time):
+    """ Searches through appointments to find the appointment that matches our timespan. """
+    new_app_list = []
+    new_time_span(start, end)
     for app in cd_iter_appointments(cal_day):
-        start_app = ts_start(app_span(app))
-        end_app = ts_end(app_span(app))
-        #app 10:00 -12:00
-        #free 08:00 - 13:00
-            #10:00      #08:00       #
+        if ts_overlap(app_span(app), new_time_span(start, end)):
+            new_app_list.append(app)
+    return new_app_list
 
-        if start_app <= start and end_app >= start:
-            """This returns True if start   """
-            free_time = new_time_span()
-        elif start_app > start:
-            
-        #ts_end(app_span(app_1)) #ts_start(app_span(app_2))
+def new_str_from_time(time: Time) -> str:
+    """ Convert and return a Time object into a string in the 'HH:MM' format. """
+    hour = hour_number(time_hour(time))
+    minute = minute_number(time_minute(time))
+    return f"{hour:02d}:{minute:02d}" #02d to make sure it is 2 digits
 
 
-def find_appointment(cal_day: CalendarDay, start: Time):
-    """Searches through appointments to find the appointment that matches our start time"""
-    for app in cd_iter_appointments(cal_day):
-        if time_equals(start, ts_start(app_span(app))):
-            return app
-
-def free_spans(cal_day: CalendarDay, start: Time, end: Time) -> TimeSpanSeq:
-    pass
