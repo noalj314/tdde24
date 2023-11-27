@@ -18,6 +18,7 @@ def remove(cal_name: str, d: int, m: str, t: str) -> None:
 
     if not is_booked_from(cal_day, start):
         print("The proposed time is not booked.")
+        return 
 
     if is_booked_from(cal_day, start): #remove if there is appointment
         new_year = minus_appointment(find_appointment(cal_day, start), cal_year, cal_month, cal_day)
