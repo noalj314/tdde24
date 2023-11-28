@@ -28,7 +28,10 @@ def show_free(cal_name: str, d: int, mon: str, start: str, end: str):
     cal_year = get_calendar(cal_name)
     cal_month = cy_get_month(mo, cal_year)
     cal_day = cm_get_day(cal_month, day)
-    free_spans(cal_day, start_time, end_time)
+    tss =free_spans(cal_day, start_time, end_time)
+    for timespan in tss_iter_spans(tss):
+        print(f"{new_str_from_time(ts_start(timespan))} - {new_str_from_time(ts_end(timespan))}")
+
 
 def free_spans(cal_day: CalendarDay, start: Time, end: Time):
     """ Creates a list with all relevant (available) timespans in given calendar day. """

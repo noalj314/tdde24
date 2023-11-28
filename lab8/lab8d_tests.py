@@ -73,8 +73,15 @@ def create_tests_for_free_span() -> dict:
         booking_data=[],  # This day's appointments
         exp_result=["08:00-21:00"],
     )  # Expected free time
-
-
+    """ Tests cases where there are very small gaps. """
+    store_test_case(
+        test_cases,
+        8,
+        start_str="08:00",
+        end_str="18:00",
+        booking_data=["08:00-10:29", "10:30-12:59", "13:00-15:29", "15:30-18:00"],
+        exp_result=["10:29-10:30", "12:59-13:00", "15:29-15:30"],
+    )
 
 
     print("Test cases generated.")
